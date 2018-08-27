@@ -7,27 +7,23 @@ use Exception;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
 use src\Integration\DataProvider;
+use src\Integration\ServiceProvider;
 
 class DecoratorManager extends DataProvider
 {
-    public $cache;
-    public $logger;
+    private $cache;
+    private $logger;
 
     /**
-     * @param string $host
-     * @param string $user
-     * @param string $password
+     * @param string $service
      * @param CacheItemPoolInterface $cache
+     * @param LoggerInterface $logger
      */
-    public function __construct($host, $user, $password, CacheItemPoolInterface $cache)
+    public function __construct(ServiceProvider $service, CacheItemPoolInterface $cache, LoggerInterface $logger)
     {
-        parent::__construct($host, $user, $password);
-        $this->cache = $cache;
-    }
-
-    public function setLogger(LoggerInterface $logger)
-    {
+        parent::__construct($service);
         $this->logger = $logger;
+        $this->cache = $cache;
     }
 
     /**
@@ -58,7 +54,7 @@ class DecoratorManager extends DataProvider
         return [];
     }
 
-    public function getCacheKey(array $input)
+    private function getCacheKey(array $input)
     {
         return json_encode($input);
     }
