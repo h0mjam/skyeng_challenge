@@ -4,20 +4,14 @@ namespace src\Integration;
 
 class DataProvider
 {
-    private $host;
-    private $user;
-    private $password;
+    private $service;
 
     /**
-     * @param $host
-     * @param $user
-     * @param $password
+     * @param $service
      */
-    public function __construct($host, $user, $password)
+    public function __construct(ServiceProvider $service)
     {
-        $this->host = $host;
-        $this->user = $user;
-        $this->password = $password;
+        $this->service = $service;
     }
     
     /**
